@@ -1,0 +1,19 @@
+#  Triangle
+"""
+Given a triangle array, return the minimum path sum from top to bottom.
+
+For each step, you may move to an adjacent number of the row below. More formally, if you are on index i on the current row, you may move to either index i or index i + 1 on the next row.
+"""
+
+from typing import List
+
+class Solution:
+    def minimumTotal(self, triangle: List[List[int]]) -> int:
+        # Start from the second last row and move upward
+        for row in range(len(triangle) - 2, -1, -1):
+            for col in range(len(triangle[row])):
+                # Update the current cell with the min path sum from below
+                triangle[row][col] += min(triangle[row+1][col], triangle[row+1][col+1])
+        
+        # The top element now contains the minimum total path
+        return triangle[0][0]
