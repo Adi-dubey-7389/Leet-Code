@@ -1,0 +1,25 @@
+#  Number of Sub-arrays With Odd Sum
+"""
+Given an array of integers arr, return the number of subarrays with an odd sum.
+
+Since the answer can be very large, return it modulo 109 + 7.
+"""
+
+class Solution:
+    def numOfSubarrays(self, arr):
+        MOD = 10**9 + 7
+        even = 1  # sum = 0 is even prefix
+        odd = 0
+        curr_sum = 0
+        result = 0
+
+        for num in arr:
+            curr_sum += num
+            if curr_sum % 2 == 0:
+                result += odd
+                even += 1
+            else:
+                result += even
+                odd += 1
+
+        return result % MOD
