@@ -1,0 +1,28 @@
+# Minimum Operations to Make a Uni-Value Grid
+"""
+You are given a 2D integer grid of size m x n and an integer x. In one operation, you can add x to or subtract x from any element in the grid.
+
+A uni-value grid is a grid where all the elements of it are equal.
+
+Return the minimum number of operations to make the grid uni-value. If it is not possible, return -1.
+"""
+
+class Solution:
+    def minOperations(self, grid: list[list[int]], x: int) -> int:
+        flat = [num for row in grid for num in row]
+        base = flat[0]
+        
+        # Step 1: Check feasibility
+        for num in flat:
+            if (num - base) % x != 0:
+                return -1
+        
+        # Step 2: Normalize values by x to simplify the math
+        flat = [(num - base) // x for num in flat]
+        flat.sort()
+        
+        # Step 3: Find median
+        median = flat[len(flat) // 2]
+        
+        # Step 4: Sum up total moves
+        return sum(abs(num - median) for num in flat)
