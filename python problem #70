@@ -1,0 +1,14 @@
+"""
+Given an integer array nums (0-indexed) and two integers target and start, find an index i such that nums[i] == target and abs(i - start) is minimized. Note that abs(x) is the absolute value of x.
+
+Return abs(i - start).
+
+It is guaranteed that target exists in nums.
+"""
+
+def get_min_distance(nums, target, start):
+    min_distance = float('inf')
+    for i in range(len(nums)):
+        if nums[i] == target:
+            min_distance = min(min_distance, abs(i - start))
+    return min_distance
