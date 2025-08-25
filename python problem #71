@@ -1,0 +1,46 @@
+"""
+You are given a string s, and an array of pairs of indices in the string pairs where pairs[i] = [a, b] indicates 2 indices(0-indexed) of the string.
+
+You can swap the characters at any pair of indices in the given pairs any number of times.
+
+Return the lexicographically smallest string that s can be changed to after using the swaps.
+"""
+
+from collections import defaultdict
+
+class UnionFind:
+    def __init__(self, size):
+        self.parent = list(range(size))
+
+    def find(self, x):
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])  # Path compression
+        return self.parent[x]
+
+    def union(self, x, y):
+        self.parent[self.find(x)] = self.find(y)
+
+def smallestStringWithSwaps(s, pairs):
+    n = len(s)
+    uf = UnionFind(n)
+
+    # Step 1: Build connected components using Union-Find
+    for a, b in pairs:
+        uf.union(a, b)
+
+    # Step 2: Group all indices by their root parent
+    components = defaultdict(list)
+    for i in range(n):
+        root = uf.find(i)
+        components[root].append(i)
+
+    # Step 3: For each component, sort the characters and place them back
+    res = list(s)
+    for indices in components.values():
+        chars = [s[i] for i in indices]
+        indices.sort()
+        chars.sort()
+        for i, char in zip(indices, chars):
+            res[i] = char
+
+    return ''.join(res)
