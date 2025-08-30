@@ -1,0 +1,20 @@
+"""
+You are given two integers, n and k.
+
+An array of distinct positive integers is called a k-avoiding array if there does not exist any pair of distinct elements that sum to k.
+
+Return the minimum possible sum of a k-avoiding array of length n.
+"""
+
+
+def minimumSum(n, k):
+    arr = []
+    num = 1
+    
+    while len(arr) < n:
+        # Pick the current number only if it doesn't form a sum = k
+        if k - num not in arr:
+            arr.append(num)
+        num += 1
+    
+    return sum(arr)
