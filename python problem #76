@@ -1,0 +1,27 @@
+"""
+You are given an integer array nums and a positive integer k.
+
+Return the number of subarrays where the maximum element of nums appears at least k times in that subarray.
+
+A subarray is a contiguous sequence of elements within an array.
+"""
+
+
+def countSubarrays(nums, k):
+    max_val = max(nums)
+    n = len(nums)
+    left = 0
+    count_max = 0
+    ans = 0
+
+    for right in range(n):
+        if nums[right] == max_val:
+            count_max += 1
+        
+        while count_max >= k:
+            if nums[left] == max_val:
+                count_max -= 1
+            left += 1
+        
+        ans += left  # all subarrays ending at right and starting before left
+    return ans
