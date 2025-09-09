@@ -1,0 +1,28 @@
+"""
+The score of an array is defined as the product of its sum and its length.
+
+For example, the score of [1, 2, 3, 4, 5] is (1 + 2 + 3 + 4 + 5) * 5 = 75.
+Given a positive integer array nums and an integer k, return the number of non-empty subarrays of nums whose score is strictly less than k.
+
+A subarray is a contiguous sequence of elements within an array.
+"""
+
+class Solution:
+    def countSubarrays(self, nums, k):
+        n = len(nums)
+        left = 0
+        window_sum = 0
+        result = 0
+
+        for right in range(n):
+            window_sum += nums[right]
+
+            # Shrink window if score >= k
+            while window_sum * (right - left + 1) >= k:
+                window_sum -= nums[left]
+                left += 1
+
+            # Count valid subarrays ending at 'right'
+            result += (right - left + 1)
+
+        return result
