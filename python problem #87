@@ -1,0 +1,22 @@
+"""
+Given a list of dominoes, dominoes[i] = [a, b] is equivalent to dominoes[j] = [c, d] if and only if either (a == c and b == d), or (a == d and b == c) - that is, one domino can be rotated to be equal to another domino.
+
+Return the number of pairs (i, j) for which 0 <= i < j < dominoes.length, and dominoes[i] is equivalent to dominoes[j].
+"""
+
+from collections import Counter
+
+class Solution:
+    def numEquivDominoPairs(self, dominoes):
+        # Convert each domino to a canonical sorted tuple
+        normalized = [tuple(sorted(domino)) for domino in dominoes]
+        
+        # Count occurrences of each normalized domino
+        freq = Counter(normalized)
+        
+        pairs = 0
+        # For each domino type, add nC2 = n*(n-1)//2
+        for count in freq.values():
+            pairs += count * (count - 1) // 2
+        
+        return pairs
